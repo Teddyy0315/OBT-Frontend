@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env/
+
+# IDEs
+.vscode/
+.idea/
+
+# macOS
+.DS_Store
+
+# PyInstaller
+*.spec
+build/
+dist/
+
+# Logs
+*.log
+
+# Others
+*.sqlite3
