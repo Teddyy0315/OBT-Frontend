@@ -8,6 +8,9 @@ else
     exit 1
 fi
 
+# Set Qt Quick Controls style
+export QT_QUICK_CONTROLS_STYLE=Fusion
+
 # Start the app
 echo "🚀 Launching the application..."
 python3 main.py

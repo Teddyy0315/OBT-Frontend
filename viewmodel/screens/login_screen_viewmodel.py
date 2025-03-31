@@ -1,3 +1,4 @@
+# login_screen_viewmodel.py
 from PySide6.QtCore import QObject, Signal
 
 class LoginScreenViewModel(QObject):
