@@ -1,5 +1,5 @@
 # login_screen_viewmodel.py
-from PySide6.QtCore import QObject, Signal
+from PySide6.QtCore import QObject, Signal # type: ignore
 
 class LoginScreenViewModel(QObject):
     login_success = Signal()
