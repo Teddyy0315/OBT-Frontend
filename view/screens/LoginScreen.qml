@@ -1,3 +1,4 @@
+// views/screens/LoginScreen.qml
 import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
@@ -9,7 +10,15 @@ Rectangle {
     height: 720
     color: "#F7FAF9"
 
+    property var viewModel
     signal loginSuccessful()
+
+    Connections {
+        target: viewModel
+        function onLoginSuccess() {
+            loginSuccessful()
+        }
+    }
 
     // Navbar
     Rectangle {
@@ -52,7 +61,7 @@ Rectangle {
         Rectangle {
             id: loginCard
             width: 398
-            height: 236
+            height: 340
             radius: 4
             color: "white"
             border.color: "#E2E8F0"
@@ -79,21 +88,31 @@ Rectangle {
                     Layout.alignment: Qt.AlignHCenter
 
                     LinedTextField {
-                        id: idField
-                        placeholderText: "Enter ID"
+                        id: userField
+                        placeholderText: "Enter username"
+                        text: viewModel.username
+                        onTextChanged: viewModel.username = text
+                    }
+
+                    LinedTextField {
+                        id: passwordField
+                        placeholderText: "Enter password"
                         echoMode: TextInput.Password
+                        text: viewModel.password
+                        onTextChanged: viewModel.password = text
                     }
 
                     PrimaryButton {
                         text: "Continue"
-                        onClicked: {
-                            if (idField.text === "123") {
-                                console.log("Login Successful");
-                                loginSuccessful();
-                            } else {
-                                console.log("Wrong ID");
-                            }
-                        }
+                        onClicked: viewModel.login()
+                    }
+
+                    Text {
+                        text: viewModel.errorMessage
+                        color: "red"
+                        font.pixelSize: 14
+                        visible: viewModel.errorMessage !== ""
+                        Layout.alignment: Qt.AlignHCenter
                     }
                 }
             }

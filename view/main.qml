@@ -15,8 +15,11 @@ Window {
         id: pageLoader
         anchors.fill: parent
         source: "screens/LoginScreen.qml"
+        onLoaded: {
+            pageLoader.item.viewModel = loginScreenViewModel;
+        }
     }
-
+    
     Component.onCompleted: {
         console.log("App loaded")
     }
