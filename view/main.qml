@@ -10,6 +10,7 @@ Window {
     height: 720
     visible: true
     title: "OBT Machine Client"
+    color: "#F9F9FB"
 
     Loader {
         id: pageLoader
@@ -27,7 +28,7 @@ Window {
     Connections {
         target: pageLoader.item
         function onLoginSuccessful() {
-            pageLoader.source = "screens/Dashboard.qml";
-        }
+            pageLoader.source = "screens/Dashboard.qml"
+            pageLoader.item.viewModel = dashboardScreenViewModel;
     }
-}
+}}

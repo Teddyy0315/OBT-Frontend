@@ -1,78 +1,35 @@
-import QtQuick 2.15
-import QtQuick.Controls 2.15
-import QtQuick.Layouts 1.15
+import QtQuick 6.5
+import QtQuick.Controls
+import QtQuick.Layouts
 
 import Components 1.0
 
-Rectangle {
-    width: 1280
-    height: 720
-    color: "#F7FAF9"
+ColumnLayout {
+    anchors.fill: parent
+    spacing: 0
 
-    signal loginSuccessful()
-
-    // Navbar
-    Rectangle {
-        id: navbar
-        width: parent.width
+    Navbar {
+        Layout.fillWidth: true
         height: 80
-        color: "#20C4A6"
+    }
 
-        RowLayout {
-            anchors.fill: parent
-            anchors.margins: 20
-            spacing: 16
+    RowLayout {
+        spacing: 0
 
-            Image {
-                source: "../assets/logo1.svg"
-                width: 140
-                height: 48
-                fillMode: Image.PreserveAspectFit
-            }
+        Layout.fillWidth: true
+        Layout.fillHeight: true
 
-            Item { Layout.fillWidth: true }
+        Sidebar {
+            onPageSelected: (pageName) => viewModel.loadPage(pageName)
+        }
 
-            Image {
-                source: "../assets/logo2.svg"
-                width: 140
-                height: 48
-                fillMode: Image.PreserveAspectFit
-            }
+        Loader {
+            id: outlet
+            Layout.fillWidth: true
+            Layout.fillHeight: true
+            source: viewModel?.currentPageComponent || ""
         }
     }
 
-    // Content area
-    Item {
-        id: contentArea
-        anchors.top: navbar.bottom
-        anchors.bottom: parent.bottom
-        anchors.left: parent.left
-        anchors.right: parent.right
-
-        Rectangle {
-            id: loginCard
-            width: 398
-            height: 236
-            radius: 4
-            color: "white"
-            border.color: "#E2E8F0"
-            border.width: 1
-            anchors.centerIn: parent
-
-            ColumnLayout {
-                anchors.fill: parent
-                anchors.margins: 24
-                spacing: 48
-
-                Text {
-                    font.family: "Roboto"
-                    font.weight: Font.Medium
-                    text: "Welcome to the app"
-                    font.pixelSize: 28
-                    color: "#000"
-                    Layout.alignment: Qt.AlignHCenter
-                }
-            }
-        }
-    }
+    property var viewModel
 }
