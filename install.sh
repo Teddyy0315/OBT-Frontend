@@ -27,17 +27,32 @@ source venv/bin/activate
 # Upgrade pip
 pip install --upgrade pip
 
-# Install system Qt dev packages (needed for some platforms)
-sudo apt install -y libgl1-mesa-dev libxcb-xinerama0 qt6-base-dev
+# Install system Qt dev + QML dependencies
+sudo apt install -y \
+    libgl1-mesa-dev \
+    libxcb-xinerama0 \
+    qt6-base-dev \
+    qt6-declarative-dev \
+    qt6-qmltooling-plugins \
+    libqt6core6 \
+    libqt6gui6 \
+    libqt6qml6 \
+    qml6-module-qtquick \
+    qml6-module-qtquick-controls \
+    qml6-module-qtquick-layouts
 
 # Install PyQt6
 echo "📦 Installing PyQt6..."
 pip install PyQt6
 
-# Install additional Python dependencies if requirements.txt exists
+# Install from requirements.txt if exists
 if [ -f "requirements.txt" ]; then
     echo "📄 Installing from requirements.txt..."
     pip install -r requirements.txt
 fi
 
-echo "✅ Setup complete. Run your app with: source venv/bin/activate && python3 main.py"
+echo "✅ Setup complete."
+echo "💡 Tip: Add this to your Python main file before creating QApplication:"
+echo '    import os'
+echo '    os.environ["QT_QUICK_BACKEND"] = "software"'
+echo "▶️  Run your app with: source venv/bin/activate && python3 main.py"

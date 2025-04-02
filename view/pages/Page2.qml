@@ -1,5 +1,5 @@
 // view/pages/Page1.qml
-import QtQuick 6.5
+import QtQuick
 
 Item {
     Rectangle {

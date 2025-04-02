@@ -16,6 +16,9 @@ loginScreen_vm = LoginScreenViewModel(APIService())
 dashboardScreen_vm = DashboardViewModel(APIService())
 
 if __name__ == "__main__":
+
+    os.environ["QT_QUICK_BACKEND"] = "software"
+    
     app = QApplication(sys.argv)
     
     engine = QQmlApplicationEngine()

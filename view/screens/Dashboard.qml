@@ -1,8 +1,8 @@
-import QtQuick 6.5
+import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 
-import Components 1.0
+import Components
 
 ColumnLayout {
     anchors.fill: parent
