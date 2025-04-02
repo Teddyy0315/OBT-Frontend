@@ -1,27 +1,43 @@
 #!/bin/bash
 
-echo "🚀 Setting up virtual environment..."
+echo "🔧 Setting up environment..."
 
-# Create venv if it doesn't exist
-if [ ! -d "venv" ]; then
-    python3 -m venv venv
+# Ensure system is updated
+sudo apt update && sudo apt install -y software-properties-common curl git
+
+# Install Python 3 & pip if missing
+if ! command -v python3 &> /dev/null; then
+    echo "⏬ Installing Python 3..."
+    sudo apt install -y python3
 fi
 
-# Activate venv
+if ! command -v pip3 &> /dev/null; then
+    echo "⏬ Installing pip..."
+    sudo apt install -y python3-pip
+fi
+
+# Optional: install venv support
+sudo apt install -y python3-venv
+
+# Create virtual environment
+echo "🐍 Creating virtual environment..."
+python3 -m venv venv
 source venv/bin/activate
 
-echo "📦 Installing dependencies..."
+# Upgrade pip
 pip install --upgrade pip
-pip install PySide6
 
-# Optional: install Pi hardware libraries (only works on a Pi)
-if grep -q "Raspberry Pi" /proc/device-tree/model 2>/dev/null; then
-    echo "🍓 Detected Raspberry Pi - installing GPIO tools..."
-    pip install RPi.GPIO
+# Install system Qt dev packages (needed for some platforms)
+sudo apt install -y libgl1-mesa-dev libxcb-xinerama0 qt6-base-dev
+
+# Install PyQt6
+echo "📦 Installing PyQt6..."
+pip install PyQt6
+
+# Install additional Python dependencies if requirements.txt exists
+if [ -f "requirements.txt" ]; then
+    echo "📄 Installing from requirements.txt..."
+    pip install -r requirements.txt
 fi
 
-# Optional: install dev tools
-echo "🛠️ Installing dev tools (black, flake8)..."
-pip install black flake8
-
-echo "✅ Done. To activate venv later, run: source venv/bin/activate"
+echo "✅ Setup complete. Run your app with: source venv/bin/activate && python3 main.py"

@@ -1,23 +1,19 @@
 import sys
 import os
 
-from PySide6.QtWidgets import QApplication  # type: ignore
-from PySide6.QtQml import QQmlApplicationEngine  # type: ignore
-from PySide6.QtGui import QFontDatabase # type: ignore
+from PyQt6.QtWidgets import QApplication
+from PyQt6.QtQml import QQmlApplicationEngine
+from PyQt6.QtGui import QFontDatabase
 
 # Viewmodels
-
 from viewmodel.screens.login_screen_viewmodel import LoginScreenViewModel
 from viewmodel.screens.dashboard_screen_viewmodel import DashboardViewModel
 
 # Service
-
 from services.api_service import APIService
-
 
 loginScreen_vm = LoginScreenViewModel(APIService())
 dashboardScreen_vm = DashboardViewModel(APIService())
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

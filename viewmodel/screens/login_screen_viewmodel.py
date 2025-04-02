@@ -1,4 +1,4 @@
-from PySide6.QtCore import QObject, Signal, Property, Slot
+from PyQt6.QtCore import QObject, pyqtSignal as Signal, pyqtProperty as Property, pyqtSlot as Slot
 
 class LoginScreenViewModel(QObject):
     loginSuccess = Signal()
