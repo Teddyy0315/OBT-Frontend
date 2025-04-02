@@ -12,6 +12,7 @@ To install and set up the application for development or testing on Raspberry Pi
 
 ```bash
 ./install.sh
+```
 
 
 This script will:
