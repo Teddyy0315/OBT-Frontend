@@ -21,23 +21,26 @@ Window {
             if (pageLoader.item && pageLoader.item.hasOwnProperty("viewModel")) {
                 pageLoader.item.viewModel = loginScreenViewModel
             }
+
+            Qt.callLater(function() {
+                if (pageLoader.item && pageLoader.item.loginSuccess) {
+                    console.log("✅ Connecting loginSuccess...")
+                    pageLoader.item.loginSuccess.connect(function() {
+                        console.log("✅ loginSuccess received — switching to Dashboard")
+                        pageLoader.source = "screens/Dashboard.qml"
+                    })
+                }
+            })
         }
 
         onSourceChanged: {
             Qt.callLater(function() {
                 if (pageLoader.item &&
-                    pageLoader.item.hasOwnProperty("viewModel") &&
-                    pageLoader.source.toString().indexOf("Dashboard") !== -1) {
+                    pageLoader.source.toString().indexOf("Dashboard") !== -1 &&
+                    pageLoader.item.hasOwnProperty("viewModel")) {
                     pageLoader.item.viewModel = dashboardScreenViewModel
                 }
             })
-        }
-    }
-
-    Connections {
-        target: pageLoader.item
-        function onLoginSuccess() {
-            pageLoader.source = "screens/Dashboard.qml"
         }
     }
 

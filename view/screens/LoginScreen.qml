@@ -4,85 +4,87 @@ import QtQuick.Layouts 1.15
 
 import "../components"
 
-ColumnLayout {
+Item {
+    id: root
     width: 1280
     height: 720
 
     property var viewModel
+    signal loginSuccess  // Exposed for main.qml to connect to
 
     Connections {
         target: viewModel
         function onLoginSuccess() {
-            // Trigger navigation directly from here
-            // OR emit something if needed
-            console.log("Signal received: loginSuccess")
-            Qt.callLater(() => {
-                view.loginSuccessful() // Optional if you define `signal loginSuccessful()` in the parent
-            })
+            root.loginSuccess()  // Relay Python signal to main.qml
         }
     }
 
-    Navbar {
-        Layout.fillWidth: true
-    }
+    ColumnLayout {
+        anchors.fill: parent
+        spacing: 0
 
-    Item {
-        Layout.fillWidth: true
-        Layout.fillHeight: true
+        Navbar {
+            Layout.fillWidth: true
+        }
 
-        Rectangle {
-            id: loginCard
-            width: 398
-            height: 340
-            radius: 4
-            color: "white"
-            border.color: "#E2E8F0"
-            border.width: 1
-            anchors.centerIn: parent
+        Item {
+            Layout.fillWidth: true
+            Layout.fillHeight: true
 
-            ColumnLayout {
-                anchors.fill: parent
-                anchors.margins: 24
-                spacing: 48
-
-                Text {
-                    font.family: "Roboto"
-                    font.weight: Font.Medium
-                    text: "Enter ID to continue"
-                    font.pixelSize: 28
-                    color: "#000"
-                    Layout.alignment: Qt.AlignHCenter
-                }
+            Rectangle {
+                id: loginCard
+                width: 398
+                height: 340
+                radius: 4
+                color: "white"
+                border.color: "#E2E8F0"
+                border.width: 1
+                anchors.centerIn: parent
 
                 ColumnLayout {
-                    spacing: 24
-                    width: parent.width
-                    Layout.alignment: Qt.AlignHCenter
-
-                    LinedTextField {
-                        placeholderText: "Enter username"
-                        text: viewModel.username
-                        onTextChanged: viewModel.username = text
-                    }
-
-                    LinedTextField {
-                        placeholderText: "Enter password"
-                        echoMode: TextInput.Password
-                        text: viewModel.password
-                        onTextChanged: viewModel.password = text
-                    }
-
-                    PrimaryButton {
-                        text: "Continue"
-                        onClicked: viewModel.login()
-                    }
+                    anchors.fill: parent
+                    anchors.margins: 24
+                    spacing: 48
 
                     Text {
-                        text: viewModel.errorMessage
-                        color: "red"
-                        font.pixelSize: 14
-                        visible: viewModel.errorMessage !== ""
+                        font.family: "Roboto"
+                        font.weight: Font.Medium
+                        text: "Enter ID to continue"
+                        font.pixelSize: 28
+                        color: "#000"
                         Layout.alignment: Qt.AlignHCenter
+                    }
+
+                    ColumnLayout {
+                        spacing: 24
+                        width: parent.width
+                        Layout.alignment: Qt.AlignHCenter
+
+                        LinedTextField {
+                            placeholderText: "Enter username"
+                            text: viewModel ? viewModel.username : ""
+                            onTextChanged: if (viewModel) viewModel.username = text
+                        }
+
+                        LinedTextField {
+                            placeholderText: "Enter password"
+                            echoMode: TextInput.Password
+                            text: viewModel ? viewModel.password : ""
+                            onTextChanged: if (viewModel) viewModel.password = text
+                        }
+
+                        PrimaryButton {
+                            text: "Continue"
+                            onClicked: if (viewModel) viewModel.login()
+                        }
+
+                        Text {
+                            text: viewModel ? viewModel.errorMessage : ""
+                            color: "red"
+                            font.pixelSize: 14
+                            visible: viewModel && viewModel.errorMessage !== ""
+                            Layout.alignment: Qt.AlignHCenter
+                        }
                     }
                 }
             }
