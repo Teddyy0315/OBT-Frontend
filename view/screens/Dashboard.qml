@@ -1,35 +1,38 @@
-import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 
-import Components
+import "../components"
 
 ColumnLayout {
     anchors.fill: parent
     spacing: 0
+
+    property var viewModel
 
     Navbar {
         Layout.fillWidth: true
     }
 
     RowLayout {
-        spacing: 0
-
         Layout.fillWidth: true
         Layout.fillHeight: true
+        spacing: 0
 
         Sidebar {
             width: 250
-            onPageSelected: (pageName) => viewModel.loadPage(pageName)
+            onPageSelected: function(pageName) {
+                if (viewModel) {
+                    viewModel.loadPage(pageName)
+                }
+            }
         }
 
         Loader {
             id: outlet
             Layout.fillWidth: true
             Layout.fillHeight: true
-            source: viewModel?.currentPageComponent || ""
+            source: viewModel && viewModel.currentPageComponent !== "" ? viewModel.currentPageComponent : ""
         }
     }
-
-    property var viewModel
 }

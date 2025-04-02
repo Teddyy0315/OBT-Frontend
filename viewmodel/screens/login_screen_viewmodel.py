@@ -1,10 +1,10 @@
-from PyQt6.QtCore import QObject, pyqtSignal as Signal, pyqtProperty as Property, pyqtSlot as Slot
+from PyQt5.QtCore import QObject, pyqtSignal, pyqtProperty, pyqtSlot
 
 class LoginScreenViewModel(QObject):
-    loginSuccess = Signal()
-    usernameChanged = Signal()
-    passwordChanged = Signal()
-    errorMessageChanged = Signal()
+    loginSuccess = pyqtSignal()
+    usernameChanged = pyqtSignal()
+    passwordChanged = pyqtSignal()
+    errorMessageChanged = pyqtSignal()
 
     def __init__(self, api_service):
         super().__init__()
@@ -13,7 +13,7 @@ class LoginScreenViewModel(QObject):
         self._password = ""
         self._errorMessage = ""
 
-    @Slot()
+    @pyqtSlot()
     def login(self):
         success, error = self.api_service.login(self._username, self._password)
         if success:
@@ -41,6 +41,6 @@ class LoginScreenViewModel(QObject):
 
     def getErrorMessage(self): return self._errorMessage
 
-    username = Property(str, getUsername, setUsername, notify=usernameChanged)
-    password = Property(str, getPassword, setPassword, notify=passwordChanged)
-    errorMessage = Property(str, getErrorMessage, notify=errorMessageChanged)
+    username = pyqtProperty(str, fget=getUsername, fset=setUsername, notify=usernameChanged)
+    password = pyqtProperty(str, fget=getPassword, fset=setPassword, notify=passwordChanged)
+    errorMessage = pyqtProperty(str, fget=getErrorMessage, notify=errorMessageChanged)

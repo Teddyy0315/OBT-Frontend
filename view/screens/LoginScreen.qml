@@ -1,20 +1,24 @@
-import QtQuick
-import QtQuick.Controls
-import QtQuick.Layouts
+import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Layouts 1.15
 
-import Components
+import "../components"
 
 ColumnLayout {
     width: 1280
     height: 720
 
     property var viewModel
-    signal loginSuccessful()
 
     Connections {
         target: viewModel
         function onLoginSuccess() {
-            loginSuccessful()
+            // Trigger navigation directly from here
+            // OR emit something if needed
+            console.log("Signal received: loginSuccess")
+            Qt.callLater(() => {
+                view.loginSuccessful() // Optional if you define `signal loginSuccessful()` in the parent
+            })
         }
     }
 

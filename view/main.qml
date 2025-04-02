@@ -2,7 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Window 2.15
 
-import Components 1.0
+import "components"
 import "screens"
 
 Window {
@@ -16,19 +16,32 @@ Window {
         id: pageLoader
         anchors.fill: parent
         source: "screens/LoginScreen.qml"
+
         onLoaded: {
-            pageLoader.item.viewModel = loginScreenViewModel;
+            if (pageLoader.item && pageLoader.item.hasOwnProperty("viewModel")) {
+                pageLoader.item.viewModel = loginScreenViewModel
+            }
         }
-    }
-    
-    Component.onCompleted: {
-        console.log("App loaded")
+
+        onSourceChanged: {
+            Qt.callLater(function() {
+                if (pageLoader.item &&
+                    pageLoader.item.hasOwnProperty("viewModel") &&
+                    pageLoader.source.toString().indexOf("Dashboard") !== -1) {
+                    pageLoader.item.viewModel = dashboardScreenViewModel
+                }
+            })
+        }
     }
 
     Connections {
         target: pageLoader.item
-        function onLoginSuccessful() {
+        function onLoginSuccess() {
             pageLoader.source = "screens/Dashboard.qml"
-            pageLoader.item.viewModel = dashboardScreenViewModel;
+        }
     }
-}}
+
+    Component.onCompleted: {
+        console.log("App loaded")
+    }
+}

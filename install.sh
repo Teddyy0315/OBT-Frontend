@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🔧 Setting up environment..."
+echo "🔧 Setting up environment for PyQt5 + QML on Raspberry Pi 5..."
 
 # Ensure system is updated
 sudo apt update && sudo apt install -y software-properties-common curl git
@@ -27,23 +27,26 @@ source venv/bin/activate
 # Upgrade pip
 pip install --upgrade pip
 
-# Install system Qt dev + QML dependencies
+# Install Qt5 + QML dependencies
+echo "📦 Installing Qt5 QML system packages..."
 sudo apt install -y \
+    qt5-qmake \
+    qtbase5-dev \
+    qtdeclarative5-dev \
+    qml-module-qtquick-controls \
+    qml-module-qtquick-controls2 \
+    qml-module-qtquick-layouts \
+    qml-module-qtgraphicaleffects \
+    libqt5qml5 \
+    libqt5quick5 \
+    libqt5gui5 \
+    libqt5core5a \
     libgl1-mesa-dev \
-    libxcb-xinerama0 \
-    qt6-base-dev \
-    qt6-declarative-dev \
-    qt6-qmltooling-plugins \
-    libqt6core6 \
-    libqt6gui6 \
-    libqt6qml6 \
-    qml6-module-qtquick \
-    qml6-module-qtquick-controls \
-    qml6-module-qtquick-layouts
+    libxcb-xinerama0
 
-# Install PyQt6
-echo "📦 Installing PyQt6..."
-pip install PyQt6
+# Install PyQt5 via pip
+echo "📦 Installing PyQt5..."
+pip install PyQt5
 
 # Install from requirements.txt if exists
 if [ -f "requirements.txt" ]; then
@@ -52,7 +55,4 @@ if [ -f "requirements.txt" ]; then
 fi
 
 echo "✅ Setup complete."
-echo "💡 Tip: Add this to your Python main file before creating QApplication:"
-echo '    import os'
-echo '    os.environ["QT_QUICK_BACKEND"] = "software"'
 echo "▶️  Run your app with: source venv/bin/activate && python3 main.py"

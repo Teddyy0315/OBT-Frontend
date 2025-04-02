@@ -1,7 +1,6 @@
-module Components
-LinedTextField LinedTextField.qml
-PrimaryButton PrimaryButton.qml
-Navbar Navbar.qml
-Sidebar Sidebar.qml
-SidebarTab SidebarTab.qml
-CocktailCard CocktailCard.qml
+LinedTextField 1.0 LinedTextField.qml
+PrimaryButton 1.0 PrimaryButton.qml
+Navbar 1.0 Navbar.qml
+Sidebar 1.0 Sidebar.qml
+SidebarTab 1.0 SidebarTab.qml
+CocktailCard 1.0 CocktailCard.qml

@@ -1,7 +1,7 @@
-from PyQt6.QtCore import QObject, pyqtSignal as Signal, pyqtProperty as Property, pyqtSlot as Slot
+from PyQt5.QtCore import QObject, pyqtSignal, pyqtProperty, pyqtSlot
 
 class DashboardViewModel(QObject):
-    currentPageComponentChanged = Signal()
+    currentPageComponentChanged = pyqtSignal()
 
     def __init__(self, api_service):
         super().__init__()
@@ -9,7 +9,7 @@ class DashboardViewModel(QObject):
         self._currentPageComponent = "../../view/pages/Page1.qml"
         self._allowedPages = ["Page1", "Page2", "Page3", "Page4"]
 
-    @Slot(str)
+    @pyqtSlot(str)
     def loadPage(self, pageName):
         if pageName in self._allowedPages:
             self._currentPageComponent = f"../../view/pages/{pageName}.qml"
@@ -18,4 +18,4 @@ class DashboardViewModel(QObject):
     def getCurrentPageComponent(self):
         return self._currentPageComponent
 
-    currentPageComponent = Property(str, getCurrentPageComponent, notify=currentPageComponentChanged)
+    currentPageComponent = pyqtProperty(str, fget=getCurrentPageComponent, notify=currentPageComponentChanged)
