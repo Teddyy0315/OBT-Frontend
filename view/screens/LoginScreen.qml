@@ -20,7 +20,6 @@ ColumnLayout {
 
     Navbar {
         Layout.fillWidth: true
-        height: 60
     }
 
     Item {

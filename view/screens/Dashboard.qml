@@ -10,7 +10,6 @@ ColumnLayout {
 
     Navbar {
         Layout.fillWidth: true
-        height: 80
     }
 
     RowLayout {
@@ -20,6 +19,7 @@ ColumnLayout {
         Layout.fillHeight: true
 
         Sidebar {
+            width: 250
             onPageSelected: (pageName) => viewModel.loadPage(pageName)
         }
 

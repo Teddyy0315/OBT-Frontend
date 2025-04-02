@@ -1,42 +1,41 @@
 import QtQuick 6.5
 import QtQuick.Controls
+import QtQuick.Layouts
 import "."
 
 Rectangle {
     id: root
     width: 250
-    height: parent?.height || 720
+    height: 640
     color: "#F0F0F3"
     border.color: "#D9D9E0"
     border.width: 1
 
     signal pageSelected(string pageName)
+    signal logoutRequested()
     property string currentPage: "Page1"
 
-    Column {
+    ColumnLayout {
         anchors.fill: parent
         spacing: 16
 
         // 🔝 Logo Header
         Frame {
-            width: parent.width
-            height: 72
+            Layout.fillWidth: true
+            Layout.preferredHeight: 72
             padding: 16
-            background: Rectangle {
-                color: "transparent"
-                border.color: "transparent"
-            }
+            background: Rectangle { color: "transparent"; border.color: "transparent" }
 
-            Row {
+            RowLayout {
                 spacing: 8
                 anchors.fill: parent
-                anchors.verticalCenter: parent.verticalCenter
 
                 Rectangle {
                     width: 56
                     height: 56
                     color: "#E0E1E6"
                     radius: 12
+                    Layout.alignment: Qt.AlignVCenter
 
                     Image {
                         anchors.centerIn: parent
@@ -47,9 +46,9 @@ Rectangle {
                     }
                 }
 
-                Column {
+                ColumnLayout {
                     spacing: 2
-                    anchors.verticalCenter: parent.verticalCenter
+                    Layout.alignment: Qt.AlignVCenter
 
                     Text {
                         text: "Odense Bartech"
@@ -67,40 +66,75 @@ Rectangle {
             }
         }
 
-        // 📄 Menu Section
+        // 📄 Menu Tabs
+        ColumnLayout {
+            Layout.fillWidth: true
+            spacing: 8
+            Layout.leftMargin: 16
+            Layout.rightMargin: 16
+
+            SidebarTab {
+                text: "Create Order"
+                active: root.currentPage === "Page1"
+                Layout.fillWidth: true
+                onClicked: {
+                    root.currentPage = "Page1"
+                    root.pageSelected("Page1")
+                }
+            }
+
+            SidebarTab {
+                text: "Machine Info"
+                active: root.currentPage === "Page2"
+                Layout.fillWidth: true
+                onClicked: {
+                    root.currentPage = "Page2"
+                    root.pageSelected("Page2")
+                }
+            }
+
+            SidebarTab {
+                text: "Containers"
+                active: root.currentPage === "Page3"
+                Layout.fillWidth: true
+                onClicked: {
+                    root.currentPage = "Page3"
+                    root.pageSelected("Page3")
+                }
+            }
+
+            SidebarTab {
+                text: "Test Hardware"
+                active: root.currentPage === "Page4"
+                Layout.fillWidth: true
+                onClicked: {
+                    root.currentPage = "Page4"
+                    root.pageSelected("Page4")
+                }
+            }
+        }
+
+        // Push logout to bottom
+        Item {
+            Layout.fillHeight: true
+        }
+
+        // 🔻 Logout
         Frame {
-            width: parent.width
+            Layout.fillWidth: true
+            Layout.preferredHeight: 72
+            padding: 16
             background: Rectangle {
                 color: "transparent"
                 border.color: "transparent"
             }
-            padding: 0
 
-            Column {
+            PrimaryButton {
+                text: "Logout"
+                backgroundColor: "#E2E2E8"
+                textColor: "#60646C"
                 width: parent.width
-                spacing: 8
-                anchors.left: parent.left
-                anchors.right: parent.right
-                anchors.leftMargin: 16
-                anchors.rightMargin: 16
-
-                SidebarTab {
-                    text: "Page1"
-                    active: root.currentPage === "Page1"
-                    onClicked: {
-                        root.currentPage = "Page1"
-                        root.pageSelected("Page1")
-                    }
-                }
-
-                SidebarTab {
-                    text: "Page2"
-                    active: root.currentPage === "Page2"
-                    onClicked: {
-                        root.currentPage = "Page2"
-                        root.pageSelected("Page2")
-                    }
-                }
+                onClicked: root.logoutRequested()
             }
         }
     }
