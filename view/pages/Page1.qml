@@ -29,7 +29,6 @@ Item {
                         text: "Create Order"
                         font.pixelSize: 28
                         
-                        font.weight: 500
                         font.family: "Roboto"
                         
                         color: "#1A202C"
@@ -40,7 +39,6 @@ Item {
                         text: "Choose and add recipes to the order here"
                         font.pixelSize: 18
                         
-                        font.weight: 400
                         font.family: "Roboto"
 
                         color: "#1A202C"

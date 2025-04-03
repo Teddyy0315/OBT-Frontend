@@ -21,12 +21,5 @@ Rectangle {
         }
 
         Item { Layout.fillWidth: true }
-
-        Image {
-            source: "../assets/logo2.svg"
-            width: 140
-            height: 48
-            fillMode: Image.PreserveAspectFit
-        }
     }
 }

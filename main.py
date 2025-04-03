@@ -8,12 +8,15 @@ from PyQt5.QtGui import QFontDatabase
 # Viewmodels
 from viewmodel.screens.login_screen_viewmodel import LoginScreenViewModel
 from viewmodel.screens.dashboard_screen_viewmodel import DashboardViewModel
+from viewmodel.pages.pump_test_viewmodel import PumpTestViewModel
 
 # Service
 from services.api_service import APIService
 
 loginScreen_vm = LoginScreenViewModel(APIService())
 dashboardScreen_vm = DashboardViewModel(APIService())
+pumpTest_vm = PumpTestViewModel()
+
 
 if __name__ == "__main__":
     os.environ["QT_QUICK_BACKEND"] = "software"  # Use software backend for QML on Pi
@@ -28,6 +31,7 @@ if __name__ == "__main__":
 
     engine.rootContext().setContextProperty("loginScreenViewModel", loginScreen_vm)
     engine.rootContext().setContextProperty("dashboardScreenViewModel", dashboardScreen_vm)
+    engine.rootContext().setContextProperty("pumpTestViewModel", pumpTest_vm)
 
     qml_file = os.path.join(os.path.dirname(__file__), "view", "main.qml")
     engine.load(qml_file)

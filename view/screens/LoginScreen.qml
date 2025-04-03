@@ -48,7 +48,6 @@ Item {
 
                     Text {
                         font.family: "Roboto"
-                        font.weight: Font.Medium
                         text: "Enter ID to continue"
                         font.pixelSize: 28
                         color: "#000"

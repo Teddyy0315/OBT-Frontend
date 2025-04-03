@@ -46,7 +46,6 @@ Rectangle {
             Text {
                 text: recipeName
                 font.pixelSize: 18
-                font.weight: Font.Medium
                 font.family: "Roboto"
                 wrapMode: Text.Wrap
                 width: 201
@@ -58,7 +57,6 @@ Rectangle {
                 text: status === "error" ? "Refill needed" 
                         : status === "disabled" ? "Offline" : "Ready"
                 font.pixelSize: 14
-                font.weight: Font.Medium
                 font.family: "Roboto"
                 color: status === "error" ? "#E5484D"
                        : status === "disabled" ? "#B9BBC6"
@@ -75,7 +73,6 @@ Rectangle {
             Text {
                 text: "Machine Ingredients"
                 font.pixelSize: 14
-                font.weight: Font.Bold
                 font.family: "Roboto"
                 color: status === "disabled" ? "#B9BBC6" : "#4A5568"
                 Layout.fillWidth: true
@@ -94,7 +91,6 @@ Rectangle {
             Text {
                 text: "Mixers"
                 font.pixelSize: 14
-                font.weight: Font.Bold
                 font.family: "Roboto"
                 color: status === "disabled" ? "#B9BBC6" : "#4A5568"
                 Layout.fillWidth: true
